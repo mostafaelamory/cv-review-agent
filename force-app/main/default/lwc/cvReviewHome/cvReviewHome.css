@@ -1,0 +1,132 @@
+.hero {
+    border-radius: 0.5rem;
+    background: linear-gradient(120deg, #032d60 0%, #0b5cab 60%, #1b96ff 100%);
+    color: #fff;
+}
+.hero-eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.75rem;
+    opacity: 0.8;
+}
+.hero-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 0.25rem 0;
+}
+.hero-sub {
+    max-width: 46rem;
+    opacity: 0.9;
+}
+.hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 0.25rem;
+}
+.kpis {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+    gap: 0.75rem;
+}
+.kpi {
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    border-left-width: 4px;
+    border-radius: 0.5rem;
+    padding: 0.75rem 1rem;
+}
+.kpi-value {
+    font-size: 1.75rem;
+    font-weight: 700;
+    line-height: 1.1;
+}
+.kpi-label {
+    color: #5c5c5c;
+    font-size: 0.8125rem;
+}
+.kpi_success {
+    border-left-color: #2e844a;
+}
+.kpi_warning {
+    border-left-color: #dd7a01;
+}
+.kpi_error {
+    border-left-color: #ba0517;
+}
+.kpi_brand {
+    border-left-color: #0b5cab;
+}
+.kpi_info,
+.kpi_neutral {
+    border-left-color: #747474;
+}
+.prompts {
+    display: grid;
+    gap: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+.prompt {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-align: left;
+    background: #f3f7fb;
+    border: 1px solid #d8e6fe;
+    border-radius: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    cursor: pointer;
+}
+.prompt:hover,
+.prompt:focus-visible {
+    background: #eaf3ff;
+    border-color: #0b5cab;
+    outline: none;
+}
+.prompt-group {
+    flex: 0 0 4.75rem;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #0b5cab;
+    font-weight: 700;
+}
+.prompt-text {
+    flex: 1;
+}
+.rows {
+    padding-bottom: 0.5rem;
+}
+.row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #f3f3f3;
+}
+.row:last-child {
+    border-bottom: none;
+}
+.row-main {
+    min-width: 0;
+}
+.row-side {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-shrink: 0;
+}
+.score {
+    font-weight: 700;
+}
+.flag {
+    font-size: 0.75rem;
+    color: #a96404;
+}
+.empty {
+    color: #5c5c5c;
+    padding: 0.5rem 0 1rem;
+}

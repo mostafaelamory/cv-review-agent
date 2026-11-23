@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Low_Data__c</fullName>
+    <label>Low Data</label>
+    <description>Card was under the completeness threshold when scored.</description>
+    <inlineHelpText>Card was under the completeness threshold when scored.</inlineHelpText>
+    <defaultValue>false</defaultValue>
+    <type>Checkbox</type>
+</CustomField>

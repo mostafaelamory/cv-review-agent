@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sharingOwnerRules>
+        <fullName>Recruiting_Team_Pool</fullName>
+        <accessLevel>Read</accessLevel>
+        <description>Bookmarks stay owned by their recruiter but are readable by the team.</description>
+        <label>Recruiting Team Pool</label>
+        <sharedTo>
+            <group>Recruiting_Team</group>
+        </sharedTo>
+        <sharedFrom>
+            <group>Recruiting_Team</group>
+        </sharedFrom>
+    </sharingOwnerRules>
+</SharingRules>

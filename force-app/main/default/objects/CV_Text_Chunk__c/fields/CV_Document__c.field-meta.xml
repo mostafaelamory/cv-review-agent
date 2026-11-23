@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CV_Document__c</fullName>
+    <label>CV Document</label>
+    <referenceTo>CV_Document__c</referenceTo>
+    <relationshipName>Text_Chunks</relationshipName>
+    <relationshipLabel>Text Chunks</relationshipLabel>
+    <relationshipOrder>0</relationshipOrder>
+    <reparentableMasterDetail>false</reparentableMasterDetail>
+    <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    <type>MasterDetail</type>
+</CustomField>

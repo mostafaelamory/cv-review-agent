@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Default</label>
+    <protected>false</protected>
+    <values><field>LLM_Mode__c</field><value xsi:type="xsd:string">Live</value></values>
+    <values><field>Strong_Threshold__c</field><value xsi:type="xsd:double">75</value></values>
+    <values><field>Possible_Threshold__c</field><value xsi:type="xsd:double">55</value></values>
+    <values><field>Low_Data_Threshold__c</field><value xsi:type="xsd:double">50</value></values>
+    <values><field>Max_Inline_Assessments__c</field><value xsi:type="xsd:double">3</value></values>
+    <values><field>Inline_Budget_Seconds__c</field><value xsi:type="xsd:double">35</value></values>
+    <values><field>Max_Candidates_Per_Query__c</field><value xsi:type="xsd:double">10</value></values>
+    <values><field>Max_Evidence_Rows__c</field><value xsi:type="xsd:double">60</value></values>
+    <values><field>Max_Attempts__c</field><value xsi:type="xsd:double">3</value></values>
+</CustomMetadata>

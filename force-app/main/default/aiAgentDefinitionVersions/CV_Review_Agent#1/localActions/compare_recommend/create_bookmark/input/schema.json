@@ -1,0 +1,28 @@
+{
+  "required" : [ "candidateName", "roleName" ],
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "candidateName" : {
+      "title" : "Candidate Name",
+      "description" : "Name of the candidate to bookmark.",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    },
+    "notes" : {
+      "title" : "Notes",
+      "description" : "The recruiter's notes, verbatim. Empty if they gave none.",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    },
+    "roleName" : {
+      "title" : "Role",
+      "description" : "Job role the candidate was evaluated for.",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    }
+  },
+  "lightning:type" : "lightning__objectType"
+}

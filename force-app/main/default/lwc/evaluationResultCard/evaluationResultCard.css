@@ -1,0 +1,46 @@
+:host {
+    display: block;
+}
+.result-row + .result-row {
+    border-top: 1px solid #e5e5e5;
+}
+.rank {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    background-color: #f3f3f3;
+    font-weight: 700;
+    font-size: 0.75rem;
+}
+.score {
+    font-weight: 700;
+    white-space: nowrap;
+}
+.toggle {
+    background: none;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    color: inherit;
+    text-align: left;
+}
+.breakdown-table th,
+.breakdown-table td {
+    padding: 0.25rem;
+    font-size: 0.75rem;
+    vertical-align: top;
+}
+.num {
+    text-align: right;
+    white-space: nowrap;
+}
+.pre-line {
+    white-space: pre-line;
+}
+.bullets {
+    list-style: disc;
+    padding-left: 1rem;
+}

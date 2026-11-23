@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Candidate_Evaluation__c</fullName>
+    <label>Candidate Evaluation</label>
+    <referenceTo>Candidate_Evaluation__c</referenceTo>
+    <relationshipName>Bookmarks</relationshipName>
+    <relationshipLabel>Bookmarks</relationshipLabel>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <required>false</required>
+    <type>Lookup</type>
+</CustomField>

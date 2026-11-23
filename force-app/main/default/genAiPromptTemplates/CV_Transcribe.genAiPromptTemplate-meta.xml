@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiPromptTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <activeVersionIdentifier>McH64+KzQNxQVmEWtYzULcDctsl3uelqofCqlwvGO0E=_1</activeVersionIdentifier>
+    <description>Transcribes a PDF CV (text or scanned) verbatim, page by page, with a quality line and an end marker.</description>
+    <developerName>CV_Transcribe</developerName>
+    <masterLabel>CV Transcribe</masterLabel>
+    <templateVersions>
+        <content>You are a meticulous document transcriber. Transcribe the attached CV file {!$Input:CV_File} exactly as written.
+
+Rules:
+1. Copy the text verbatim. Do not summarise, translate, reorder, correct spelling, or add anything.
+2. Start at page {!$Input:Start_Page}. Skip earlier pages.
+3. Reading order: for multi-column layouts, transcribe the left column completely, then the right column. Transcribe tables row by row, separating cells with &quot; | &quot;.
+4. Keep bullets as lines starting with &quot;- &quot;. Keep dates, numbers, emails, phone numbers and URLs exactly.
+5. Mark text you cannot read as [illegible]. Never guess it.
+6. Do not describe images, logos or layout. No commentary.
+
+Output format, nothing else:
+QUALITY: Good | Partial | Unreadable
+=== PAGE &lt;n&gt; ===
+&lt;verbatim text of page n&gt;
+=== PAGE &lt;n+1&gt; ===
+...
+[[END]]
+
+QUALITY is Good when all text is legible, Partial when some text is illegible or cut, Unreadable when no text can be read.
+Write [[END]] only after the last page of the document. If you cannot finish, stop at the end of a complete page and do not write [[END]].
+</content>
+        <inputs>
+            <apiName>CV_File</apiName>
+            <definition>SOBJECT://ContentDocument</definition>
+            <masterLabel>CV File</masterLabel>
+            <referenceName>Input:CV_File</referenceName>
+            <required>true</required>
+        </inputs>
+        <inputs>
+            <apiName>Start_Page</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>Start Page</masterLabel>
+            <referenceName>Input:Start_Page</referenceName>
+            <required>true</required>
+        </inputs>
+        <primaryModel>sfdc_ai__DefaultGPT4Omni</primaryModel>
+        <status>Published</status>
+        <versionIdentifier>McH64+KzQNxQVmEWtYzULcDctsl3uelqofCqlwvGO0E=_1</versionIdentifier>
+    </templateVersions>
+    <type>einstein_gpt__flex</type>
+    <visibility>Global</visibility>
+</GenAiPromptTemplate>

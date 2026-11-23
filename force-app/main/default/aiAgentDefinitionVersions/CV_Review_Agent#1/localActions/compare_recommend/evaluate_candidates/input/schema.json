@@ -1,0 +1,21 @@
+{
+  "required" : [ "roleName" ],
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "candidateNames" : {
+      "title" : "Candidate Names",
+      "description" : "Comma-separated candidate names. Empty to evaluate every candidate linked to the role.",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    },
+    "roleName" : {
+      "title" : "Role",
+      "description" : "Name of the job role to evaluate against.",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    }
+  },
+  "lightning:type" : "lightning__objectType"
+}

@@ -1,0 +1,78 @@
+<template>
+    <lightning-card title={title} icon-name="standard:scan_card">
+        <div class="slds-p-horizontal_medium">
+            <template lwc:if={error}>
+                <p class="slds-text-color_error">{error}</p>
+            </template>
+            <template lwc:if={noEvaluation}>
+                <p class="slds-text-color_weak">This bookmark has no linked evaluation.</p>
+            </template>
+            <template lwc:if={hasEvaluation}>
+                <div class="summary">
+                    <div>
+                        <span class="score">{score}</span><span class="outof">/100</span>
+                        <span class={bandClass}>{band}</span>
+                    </div>
+                    <div class="flags">
+                        <span lwc:if={hasGaps} class="slds-badge slds-theme_error">{gaps} must-have gap(s)</span>
+                        <span lwc:if={lowData} class="slds-badge slds-theme_warning">Low data</span>
+                        <span lwc:if={superseded} class="slds-badge">Superseded by a newer evaluation</span>
+                    </div>
+                </div>
+                <p class="method">
+                    Score = 100 × Σ(weight × match × confidence) ÷ Σ weight. The model labels each requirement from the
+                    CV evidence; the points are computed in Apex.
+                </p>
+
+                <template lwc:if={hasRows}>
+                    <ul class="lines" aria-label="Requirements">
+                        <template for:each={rows} for:item="r">
+                            <li key={r.key} class="line">
+                                <div class="line-head">
+                                    <span class="req">
+                                        {r.requirement}
+                                        <abbr lwc:if={r.isMust} title="Must-have" class="must">must</abbr>
+                                    </span>
+                                    <span class={r.matchClass}>{r.match}</span>
+                                </div>
+                                <div class="bar" aria-hidden="true"><div class="bar-fill" style={r.barStyle}></div></div>
+                                <div class="line-meta">
+                                    <span>{r.points} pts</span>
+                                    <span>Confidence: {r.confidence}</span>
+                                    <span>{r.evidenceCount} evidence</span>
+                                    <span lwc:if={r.decidedBy}>{r.decidedBy}</span>
+                                </div>
+                                <p lwc:if={r.rationale} class="rationale">{r.rationale}</p>
+                            </li>
+                        </template>
+                    </ul>
+                </template>
+
+                <div class="slds-grid slds-wrap slds-gutters_small slds-m-top_small">
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                        <h3 class="sub">Strengths</h3>
+                        <ul class="slds-list_dotted">
+                            <template for:each={strengths} for:item="s"><li key={s}>{s}</li></template>
+                        </ul>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                        <h3 class="sub">Concerns</h3>
+                        <ul class="slds-list_dotted">
+                            <template for:each={concerns} for:item="s"><li key={s}>{s}</li></template>
+                        </ul>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                        <h3 class="sub">Interview probes</h3>
+                        <ul class="slds-list_dotted">
+                            <template for:each={probes} for:item="s"><li key={s}>{s}</li></template>
+                        </ul>
+                    </div>
+                </div>
+                <template lwc:if={recommendation}>
+                    <h3 class="sub slds-m-top_small">Recommendation</h3>
+                    <p class="recommendation">{recommendation}</p>
+                </template>
+            </template>
+        </div>
+    </lightning-card>
+</template>

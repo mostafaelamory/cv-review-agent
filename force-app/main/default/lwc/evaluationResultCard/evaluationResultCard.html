@@ -1,0 +1,153 @@
+<template>
+    <article class="slds-text-body_regular" aria-label={ariaLabel}>
+        <template lwc:if={hasValue}>
+            <header class="slds-m-bottom_x-small">
+                <h2 class="slds-text-heading_small role-name">
+                    <template lwc:if={roleUrl}>
+                        <a href={roleUrl}>{roleLabel}</a>
+                    </template>
+                    <template lwc:else>{roleLabel}</template>
+                </h2>
+            </header>
+
+            <template lwc:if={result.recommendation}>
+                <p class="slds-m-bottom_x-small pre-line recommendation">{result.recommendation}</p>
+            </template>
+            <template lwc:if={result.tradeOffs}>
+                <div class="slds-m-bottom_x-small trade-offs">
+                    <p class="slds-text-title_caps">Trade-offs</p>
+                    <p class="slds-text-body_small pre-line">{result.tradeOffs}</p>
+                </div>
+            </template>
+
+            <template lwc:if={showNoStrongBanner}>
+                <div class="slds-notify slds-notify_alert slds-alert_warning slds-m-bottom_x-small no-strong" role="status">
+                    <span class="slds-assistive-text">Warning</span>
+                    <p>No strong match — best available: {bestAvailable}</p>
+                </div>
+            </template>
+
+            <template lwc:if={hasRows}>
+                <ol class="slds-list_vertical" aria-label="Ranked candidates">
+                    <template for:each={rows} for:item="row">
+                        <li key={row.key} class="result-row slds-p-vertical_x-small" data-id={row.key}>
+                            <div class="slds-grid slds-grid_vertical-align-center slds-gutters_xx-small">
+                                <div class="slds-col slds-no-flex">
+                                    <span class="rank" aria-label={row.rankLabel}>{row.rank}</span>
+                                </div>
+                                <div class="slds-col slds-grow slds-truncate">
+                                    <template lwc:if={row.candidateUrl}>
+                                        <a href={row.candidateUrl} class="candidate-link" title={row.candidateName}>{row.candidateName}</a>
+                                    </template>
+                                    <template lwc:else>
+                                        <span title={row.candidateName}>{row.candidateName}</span>
+                                    </template>
+                                </div>
+                                <div class="slds-col slds-no-flex">
+                                    <span class="score slds-m-right_xx-small">{row.scoreLabel}</span>
+                                    <template lwc:if={row.band}>
+                                        <span class={row.bandClass}>{row.band}</span>
+                                    </template>
+                                </div>
+                                <div class="slds-col slds-no-flex">
+                                    <lightning-button-icon
+                                        icon-name={row.toggleIcon}
+                                        variant="bare"
+                                        size="small"
+                                        alternative-text={row.toggleLabel}
+                                        title={row.toggleLabel}
+                                        aria-expanded={row.ariaExpanded}
+                                        data-key={row.key}
+                                        onclick={handleToggle}
+                                        class="toggle-button"
+                                    ></lightning-button-icon>
+                                </div>
+                            </div>
+
+                            <template lwc:if={row.hasFlags}>
+                                <div class="slds-m-top_xx-small slds-p-left_large flags">
+                                    <template for:each={row.flags} for:item="flag">
+                                        <span key={flag.label} class={flag.cssClass}>{flag.label}</span>
+                                    </template>
+                                </div>
+                            </template>
+
+                            <template lwc:if={row.expanded}>
+                                <div class="slds-m-top_x-small slds-p-left_large details">
+                                    <template lwc:if={row.hasBreakdown}>
+                                        <table class="slds-table slds-table_bordered slds-table_fixed-layout breakdown-table" aria-label={row.breakdownLabel}>
+                                            <thead>
+                                                <tr class="slds-line-height_reset">
+                                                    <th scope="col" class="req-col">Requirement</th>
+                                                    <th scope="col">Match</th>
+                                                    <th scope="col">Conf.</th>
+                                                    <th scope="col" class="num">Pts</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <template for:each={row.breakdown} for:item="line">
+                                                    <tr key={line.key}>
+                                                        <td class="slds-cell-wrap">
+                                                            <span title={line.rationale}>{line.requirement}</span>
+                                                            <template lwc:if={line.isMustHave}>
+                                                                <abbr class="slds-text-color_error slds-m-left_xx-small" title="Must-have">*</abbr>
+                                                            </template>
+                                                            <template lwc:if={line.rationale}>
+                                                                <div class="slds-text-color_weak">{line.rationale}</div>
+                                                            </template>
+                                                        </td>
+                                                        <td class="slds-cell-wrap">{line.match}</td>
+                                                        <td class="slds-cell-wrap">{line.confidence}</td>
+                                                        <td class="num">{line.points}</td>
+                                                    </tr>
+                                                </template>
+                                            </tbody>
+                                        </table>
+                                    </template>
+
+                                    <template for:each={row.notes} for:item="note">
+                                        <div key={note.title} class="slds-m-top_x-small">
+                                            <p class="slds-text-title_caps">{note.title}</p>
+                                            <ul class="bullets slds-text-body_small">
+                                                <template for:each={note.lines} for:item="line">
+                                                    <li key={line.key}>{line.text}</li>
+                                                </template>
+                                            </ul>
+                                        </div>
+                                    </template>
+                                </div>
+                            </template>
+                        </li>
+                    </template>
+                </ol>
+            </template>
+            <template lwc:else>
+                <p class="slds-text-color_weak slds-text-body_small no-rows">No candidates have been scored for this role yet.</p>
+            </template>
+
+            <template lwc:if={hasPending}>
+                <div class="slds-m-top_x-small pending">
+                    <p class="slds-text-title_caps">Still scoring</p>
+                    <ul class="bullets slds-text-body_small">
+                        <template for:each={pending} for:item="p">
+                            <li key={p.key}>{p.text}</li>
+                        </template>
+                    </ul>
+                </div>
+            </template>
+            <template lwc:if={hasFailed}>
+                <div class="slds-m-top_x-small failed">
+                    <p class="slds-text-title_caps slds-text-color_error">Could not score</p>
+                    <ul class="bullets slds-text-body_small">
+                        <template for:each={failed} for:item="f">
+                            <li key={f.key}>{f.text}</li>
+                        </template>
+                    </ul>
+                </div>
+            </template>
+        </template>
+        <template lwc:else>
+            <p class="slds-text-color_weak slds-text-body_small empty">No evaluation result to show.</p>
+        </template>
+    </article>
+</template>

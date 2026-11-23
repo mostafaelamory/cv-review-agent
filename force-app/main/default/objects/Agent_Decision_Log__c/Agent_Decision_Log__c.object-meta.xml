@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <compactLayoutAssignment>CV_Highlights</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Audit row for every agent action and pipeline step. Written from Log_Event__e so it survives rollbacks.</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>Private</externalSharingModel>
+    <label>Agent Decision Log</label>
+    <nameField>
+        <displayFormat>LOG-{0000000}</displayFormat>
+        <label>Agent Decision Log Number</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Agent Decision Logs</pluralLabel>
+    <sharingModel>Private</sharingModel>
+</CustomObject>

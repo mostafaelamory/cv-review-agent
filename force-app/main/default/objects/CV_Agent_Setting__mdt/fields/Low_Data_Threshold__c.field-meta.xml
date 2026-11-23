@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Low_Data_Threshold__c</fullName>
+    <label>Low Data Threshold</label>
+    <description>Card completeness (%) under which a score carries a low-data flag.</description>
+    <inlineHelpText>Card completeness (%) under which a score carries a low-data flag.</inlineHelpText>
+    <precision>3</precision>
+    <scale>0</scale>
+    <required>false</required>
+    <type>Number</type>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+</CustomField>

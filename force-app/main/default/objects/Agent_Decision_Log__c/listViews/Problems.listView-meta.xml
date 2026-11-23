@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Problems</fullName>
+    <columns>NAME</columns>
+    <columns>Action__c</columns>
+    <columns>Outcome__c</columns>
+    <columns>Grounding_Check__c</columns>
+    <columns>Error_Message__c</columns>
+    <columns>CREATED_DATE</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Outcome__c</field>
+        <operation>notEqual</operation>
+        <value>Success</value>
+    </filters>
+    <label>Problems</label>
+</ListView>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StaticResource xmlns="http://soap.sforce.com/2006/04/metadata">
+    <cacheControl>Public</cacheControl>
+    <contentType>application/zip</contentType>
+    <description>Mozilla pdf.js 3.11.174 (Apache-2.0) from cdnjs: reads the PDF text layer in the browser for CV ingestion.</description>
+</StaticResource>

@@ -1,0 +1,30 @@
+.badge-stated {
+    background-color: #ebf7e6;
+    color: #2e844a;
+    border: 1px solid #91db8b;
+}
+.badge-inferred {
+    background-color: #d8e6fe;
+    color: #0b5cab;
+}
+.badge-check {
+    --slds-c-icon-color-foreground-default: #ffffff;
+    --sds-c-icon-color-foreground-default: #ffffff;
+}
+.conflict-group {
+    border: 1px solid #ea001e;
+    border-left-width: 4px;
+    border-radius: 0.25rem;
+    background-color: #fef1ee;
+}
+.fact-row + .fact-row {
+    border-top: 1px solid #e5e5e5;
+}
+.fact-value {
+    font-weight: 600;
+    word-break: break-word;
+}
+.legend-item {
+    display: inline-flex;
+    align-items: center;
+}

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Quote_Verified__c</fullName>
+    <label>Quote Verified</label>
+    <description>The source quote was found in the stored CV text.</description>
+    <inlineHelpText>The source quote was found in the stored CV text.</inlineHelpText>
+    <defaultValue>false</defaultValue>
+    <type>Checkbox</type>
+</CustomField>

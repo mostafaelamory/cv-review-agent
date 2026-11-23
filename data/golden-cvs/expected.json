@@ -1,0 +1,20 @@
+{
+  "01_sara_ahmed_complete.pdf": {"status": "Extracted", "name": "Sara Ahmed", "email": "sara.ahmed@example.com",
+    "skills": ["Apex", "LWC", "SOQL", "Flow", "REST", "Platform Events", "Git"], "certifications": 2, "conflicts": false, "missing": []},
+  "02_omar_khalil_no_education.docx": {"status": "Extracted", "name": "Omar Khalil", "email": "omar.khalil@example.com",
+    "skills": ["MuleSoft", "Apex", "Java", "SQL", "Postman"], "certifications": 1, "conflicts": false, "missing": ["Education"]},
+  "03_lina_haddad_overlap.pdf": {"status": "Extracted", "name": "Lina Haddad", "email": "lina.haddad@example.com",
+    "skills": ["Apex", "LWC", "JavaScript", "React", "Node.js", "SOQL"], "overlap": true, "conflicts": false, "missing": []},
+  "04_youssef_nasser_contradiction.docx": {"status": "Extracted", "name": "Youssef Nasser", "email": "youssef.nasser@example.com",
+    "skills": ["Apex", "Visualforce", "CPQ", "Flow"], "conflicts": true, "missing": []},
+  "05_maya_farouk_two_column.pdf": {"status": "Extracted", "name": "Maya Farouk", "email": "maya.farouk@example.com",
+    "skills": ["Apex", "LWC", "SOQL", "Data Cloud", "Agentforce", "Python"], "conflicts": false, "missing": []},
+  "06_karim_saleh.docx": {"status": "Extracted", "name": "Karim Saleh", "email": "karim.saleh@example.com",
+    "skills": ["Flow", "Apex", "SOQL", "Reports", "JS"], "certifications": 2, "conflicts": false, "missing": ["Phone"]},
+  "07_nour_mansour_bilingual.pdf": {"status": "Extracted", "name": "Nour Mansour", "email": "nour.mansour@example.com",
+    "skills": ["Apex", "LWC", "Service Cloud", "Experience Cloud", "Data Loader"], "conflicts": false, "missing": []},
+  "08_hassan_ali_scanned.pdf": {"status": "Failed"},
+  "09_tarek_legacy.doc": {"status": "Failed", "reason": "Unsupported format"},
+  "10_sara_ahmed_updated.pdf": {"status": "Extracted", "name": "Sara Ahmed", "email": "sara.ahmed@example.com",
+    "skills": ["Apex", "LWC", "Agentforce"], "possible_duplicate": true, "conflicts": false, "missing": []}
+}

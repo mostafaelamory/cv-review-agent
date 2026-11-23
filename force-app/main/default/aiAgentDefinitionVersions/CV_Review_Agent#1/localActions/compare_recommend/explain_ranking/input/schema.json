@@ -1,0 +1,28 @@
+{
+  "required" : [ "roleName", "candidateA", "candidateB" ],
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "candidateA" : {
+      "title" : "Candidate A",
+      "description" : "Name of the first candidate.",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    },
+    "candidateB" : {
+      "title" : "Candidate B",
+      "description" : "Name of the second candidate.",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    },
+    "roleName" : {
+      "title" : "Role",
+      "description" : "Job role both candidates were evaluated for.",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    }
+  },
+  "lightning:type" : "lightning__objectType"
+}

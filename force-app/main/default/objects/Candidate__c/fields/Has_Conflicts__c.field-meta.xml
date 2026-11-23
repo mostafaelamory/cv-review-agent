@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Has_Conflicts__c</fullName>
+    <label>Has Conflicts</label>
+    <description>At least one conflict group exists on the card.</description>
+    <inlineHelpText>At least one conflict group exists on the card.</inlineHelpText>
+    <defaultValue>false</defaultValue>
+    <type>Checkbox</type>
+</CustomField>

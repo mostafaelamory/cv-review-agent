@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiPromptTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <activeVersionIdentifier>8DCci7S+52IP+03PpRxmeM8mOOqXWfuS/CaHlBySRO0=_1</activeVersionIdentifier>
+    <description>Writes the recommendation, trade-offs, strengths, concerns and interview probes from computed scores.</description>
+    <developerName>CV_Recommend</developerName>
+    <masterLabel>CV Recommend</masterLabel>
+    <templateVersions>
+        <content>You advise a recruiter. The scores and ranking below were computed by the system from a per-requirement breakdown; they are final. Do not recompute, change or question them.
+
+Role:
+{!$Input:Role}
+
+Ranked candidates with their breakdown (each starts with an id like [C1]):
+{!$Input:Ranking}
+
+Is any candidate a Strong match? {!$Input:Any_Strong}
+
+Write:
+1. &quot;recommendation&quot;: 2 to 4 sentences. Recommend one or more candidates by name and say why, referring to specific requirements. If no candidate is Strong, say so plainly, name the best available candidate, and name the gaps that make it a risk.
+2. &quot;trade_offs&quot;: 1 to 3 sentences comparing the top candidates: what you gain and lose choosing one over another.
+3. For each candidate: up to 3 &quot;strengths&quot; and up to 3 &quot;concerns&quot;, each tied to a named requirement; and up to 3 &quot;interview_probes&quot;: concrete questions that would confirm each must-have gap, Partial match, low-confidence or conflicting fact, or low-data warning.
+
+Rules: refer to candidates by name only, never by ids like C1; use only the information given; be specific and neutral; never consider age, gender, nationality, religion, health or other protected characteristics; keep each bullet under 25 words.
+
+Return ONLY this JSON, no code fences:
+{&quot;recommendation&quot;: &quot;...&quot;, &quot;trade_offs&quot;: &quot;...&quot;, &quot;candidates&quot;: [{&quot;id&quot;: &quot;C1&quot;, &quot;strengths&quot;: [&quot;...&quot;], &quot;concerns&quot;: [&quot;...&quot;], &quot;interview_probes&quot;: [&quot;...&quot;]}]}
+</content>
+        <inputs>
+            <apiName>Role</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>Role</masterLabel>
+            <referenceName>Input:Role</referenceName>
+            <required>true</required>
+        </inputs>
+        <inputs>
+            <apiName>Ranking</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>Ranking</masterLabel>
+            <referenceName>Input:Ranking</referenceName>
+            <required>true</required>
+        </inputs>
+        <inputs>
+            <apiName>Any_Strong</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>Any Strong</masterLabel>
+            <referenceName>Input:Any_Strong</referenceName>
+            <required>true</required>
+        </inputs>
+        <primaryModel>sfdc_ai__DefaultGPT4Omni</primaryModel>
+        <status>Published</status>
+        <versionIdentifier>8DCci7S+52IP+03PpRxmeM8mOOqXWfuS/CaHlBySRO0=_1</versionIdentifier>
+    </templateVersions>
+    <type>einstein_gpt__flex</type>
+    <visibility>Global</visibility>
+</GenAiPromptTemplate>

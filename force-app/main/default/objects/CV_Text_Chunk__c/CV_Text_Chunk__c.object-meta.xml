@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <compactLayoutAssignment>CV_Highlights</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Stored CV text: one row per page (PDF) or block (DOCX). Source quotes are verified against it.</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
+    <label>CV Text Chunk</label>
+    <nameField>
+        <displayFormat>CHK-{000000}</displayFormat>
+        <label>CV Text Chunk Number</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>CV Text Chunks</pluralLabel>
+    <sharingModel>ControlledByParent</sharingModel>
+</CustomObject>

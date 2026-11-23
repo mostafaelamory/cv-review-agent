@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Max_Candidates_Per_Query__c</fullName>
+    <label>Max Candidates Per Query</label>
+    <precision>3</precision>
+    <scale>0</scale>
+    <required>false</required>
+    <type>Number</type>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+</CustomField>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CompactLayout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CV_Highlights</fullName>
+    <fields>Name</fields>
+    <fields>Candidate__c</fields>
+    <fields>Job_Role__c</fields>
+    <fields>Total_Score__c</fields>
+    <fields>Band__c</fields>
+    <fields>Is_Current__c</fields>
+    <label>CV Highlights</label>
+</CompactLayout>

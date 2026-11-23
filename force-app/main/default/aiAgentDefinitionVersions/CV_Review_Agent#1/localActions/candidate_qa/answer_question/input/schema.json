@@ -1,0 +1,35 @@
+{
+  "required" : [ "question" ],
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "candidateNames" : {
+      "title" : "Candidate Names",
+      "description" : "Comma-separated names of the candidates the question is about. Empty for questions across all candidates.",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    },
+    "contextRecordId" : {
+      "title" : "Context Record Id",
+      "description" : "Id of the Candidate or Job Role record the recruiter is viewing, if known. Otherwise empty.",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    },
+    "keywords" : {
+      "title" : "Keywords",
+      "description" : "Comma-separated search terms from the question: skills, technologies, degrees, employers, languages.",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    },
+    "question" : {
+      "title" : "Question",
+      "description" : "The recruiter's question, verbatim.",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    }
+  },
+  "lightning:type" : "lightning__objectType"
+}

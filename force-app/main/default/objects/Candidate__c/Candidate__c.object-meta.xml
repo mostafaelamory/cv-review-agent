@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <compactLayoutAssignment>CV_Highlights</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Candidate Card header, one per applicant. Facts live in Candidate_Evidence__c rows.</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>Private</externalSharingModel>
+    <label>Candidate</label>
+    <nameField>
+        <label>Candidate Name</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Candidates</pluralLabel>
+    <sharingModel>Private</sharingModel>
+</CustomObject>

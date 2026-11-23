@@ -1,0 +1,233 @@
+<template>
+    <lightning-card icon-name="standard:avatar">
+        <h2 slot="title" class="slds-card__header-title">
+            <span class="slds-truncate" title={name}>{name}</span>
+        </h2>
+        <div slot="actions">
+            <lightning-input
+                type="toggle"
+                label="Show only issues"
+                message-toggle-active=""
+                message-toggle-inactive=""
+                checked={showIssuesOnly}
+                onchange={handleToggleIssues}
+                class="issues-toggle"
+            ></lightning-input>
+        </div>
+
+        <div class="slds-p-horizontal_medium">
+            <template lwc:if={isLoading}>
+                <div class="slds-is-relative slds-p-vertical_large">
+                    <lightning-spinner alternative-text="Loading candidate card" size="small"></lightning-spinner>
+                </div>
+            </template>
+
+            <template lwc:if={errorMessage}>
+                <div class="slds-notify slds-notify_alert slds-alert_error" role="alert">
+                    <span class="slds-assistive-text">Error</span>
+                    <h2>{errorMessage}</h2>
+                </div>
+            </template>
+
+            <template lwc:if={card}>
+                <!-- Header -->
+                <section class="slds-m-bottom_small" aria-label="Candidate summary">
+                    <template lwc:if={candidate.Headline__c}>
+                        <p class="slds-text-heading_small headline">{candidate.Headline__c}</p>
+                    </template>
+                    <ul class="slds-list_horizontal slds-has-dividers_left slds-wrap slds-text-body_small slds-m-top_xx-small">
+                        <template lwc:if={candidate.Location__c}>
+                            <li class="slds-item">
+                                <lightning-icon icon-name="utility:location" size="xx-small" alternative-text="Location" class="slds-m-right_xx-small"></lightning-icon>
+                                {candidate.Location__c}
+                            </li>
+                        </template>
+                        <template lwc:if={candidate.Email__c}>
+                            <li class="slds-item">
+                                <lightning-formatted-email value={candidate.Email__c}></lightning-formatted-email>
+                            </li>
+                        </template>
+                        <template lwc:if={candidate.Phone__c}>
+                            <li class="slds-item">
+                                <lightning-formatted-phone value={candidate.Phone__c}></lightning-formatted-phone>
+                            </li>
+                        </template>
+                        <template lwc:if={card.experienceLabel}>
+                            <li class="slds-item experience">
+                                {card.experienceLabel}
+                                <span class="slds-text-color_weak"> experience (inferred from dates)</span>
+                            </li>
+                        </template>
+                    </ul>
+
+                    <div class="slds-grid slds-wrap slds-gutters_x-small slds-m-top_small slds-grid_vertical-align-center">
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                            <div class="slds-text-body_small slds-m-bottom_xx-small">
+                                Card completeness: {completenessLabel}
+                            </div>
+                            <lightning-progress-bar
+                                value={completenessValue}
+                                size="medium"
+                                variant="circular"
+                            ></lightning-progress-bar>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-m-top_x-small">
+                            <template lwc:if={candidate.Card_Status__c}>
+                                <span class="slds-badge slds-m-right_xx-small card-status">{candidate.Card_Status__c}</span>
+                            </template>
+                            <template lwc:if={candidate.Has_Conflicts__c}>
+                                <span class="slds-badge slds-theme_error slds-m-right_xx-small conflicts-flag">
+                                    <lightning-icon icon-name="utility:warning" size="xx-small" variant="inverse" class="slds-m-right_xx-small" alternative-text=""></lightning-icon>
+                                    Has conflicts
+                                </span>
+                            </template>
+                            <template lwc:if={duplicateUrl}>
+                                <span class="slds-text-body_small duplicate">
+                                    Possible duplicate of
+                                    <a href={duplicateUrl}>{duplicateName}</a>
+                                </span>
+                            </template>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Legend -->
+                <div class="slds-box slds-box_x-small slds-m-bottom_small" role="group" aria-label="Badge legend">
+                    <ul class="slds-list_horizontal slds-wrap legend">
+                        <template for:each={legend} for:item="item">
+                            <li key={item.badge} class="legend-item slds-m-right_small slds-m-vertical_xx-small">
+                                <span class={item.badgeClass}>
+                                    <template lwc:if={item.showCheck}>
+                                        <lightning-icon icon-name="utility:check" size="xx-small" variant="inverse" class="slds-m-right_xx-small" alternative-text=""></lightning-icon>
+                                    </template>
+                                    {item.badge}
+                                </span>
+                                <span class="slds-text-body_small slds-m-left_xx-small">{item.count}</span>
+                            </li>
+                        </template>
+                    </ul>
+                </div>
+
+                <!-- Sections -->
+                <template lwc:if={hasVisibleSections}>
+                    <template for:each={visibleSections} for:item="section">
+                        <section key={section.category} class="slds-m-bottom_medium fact-section" aria-label={section.category}>
+                            <h3 class="slds-text-title_caps slds-m-bottom_x-small">
+                                {section.category}
+                                <template lwc:if={section.issueCount}>
+                                    <span class="slds-badge slds-badge_lightest slds-m-left_x-small">{section.issueLabel}</span>
+                                </template>
+                            </h3>
+                            <template for:each={section.groups} for:item="group">
+                                <div key={group.key} class={group.cssClass}>
+                                    <template lwc:if={group.isConflict}>
+                                        <p class="slds-text-body_small slds-text-color_error slds-p-horizontal_x-small slds-p-top_x-small">
+                                            Conflicting values ({group.label})
+                                        </p>
+                                    </template>
+                                    <template for:each={group.facts} for:item="fact">
+                                        <div key={fact.id} class="fact-row slds-p-around_x-small" data-id={fact.id}>
+                                            <div class="slds-grid slds-grid_align-spread slds-grid_vertical-align-start">
+                                                <div class="slds-col slds-grow">
+                                                    <div>
+                                                        <template lwc:if={fact.attributeLabel}>
+                                                            <span class="slds-text-body_small slds-text-color_weak slds-m-right_xx-small">{fact.attributeLabel}</span>
+                                                        </template>
+                                                        <span class="fact-value">{fact.displayValue}</span>
+                                                    </div>
+                                                    <template lwc:if={fact.subLine}>
+                                                        <div class="slds-text-body_small">{fact.subLine}</div>
+                                                    </template>
+                                                    <div class="slds-m-top_xx-small">
+                                                        <span class={fact.badgeClass}>
+                                                            <template lwc:if={fact.showCheck}>
+                                                                <lightning-icon icon-name="utility:check" size="xx-small" variant="inverse" class="slds-m-right_xx-small" alternative-text=""></lightning-icon>
+                                                            </template>
+                                                            {fact.badge}
+                                                        </span>
+                                                        <template lwc:if={fact.confidence}>
+                                                            <span class="slds-text-body_small slds-text-color_weak slds-m-left_x-small">Confidence: {fact.confidence}</span>
+                                                        </template>
+                                                        <template lwc:if={fact.sourceText}>
+                                                            <lightning-helptext
+                                                                class="slds-m-left_x-small source-help"
+                                                                icon-name="utility:quote"
+                                                                content={fact.sourceText}
+                                                                alternative-text="Show source quote"
+                                                            ></lightning-helptext>
+                                                        </template>
+                                                    </div>
+                                                    <template lwc:if={fact.explanation}>
+                                                        <p class="slds-text-body_small slds-text-color_weak slds-m-top_xx-small explanation">
+                                                            {fact.explanationLabel}: {fact.explanation}
+                                                        </p>
+                                                    </template>
+                                                </div>
+                                                <div class="slds-col slds-no-flex">
+                                                    <lightning-button-icon
+                                                        icon-name="utility:edit"
+                                                        variant="bare"
+                                                        size="small"
+                                                        alternative-text={fact.correctLabel}
+                                                        title={fact.correctLabel}
+                                                        data-id={fact.id}
+                                                        onclick={handleStartEdit}
+                                                        class="correct-button"
+                                                    ></lightning-button-icon>
+                                                </div>
+                                            </div>
+
+                                            <template lwc:if={fact.isEditing}>
+                                                <div class="slds-box slds-box_x-small slds-theme_shade slds-m-top_x-small edit-panel">
+                                                    <lightning-input
+                                                        label="Correct value"
+                                                        value={editValue}
+                                                        max-length="255"
+                                                        onchange={handleEditValue}
+                                                        class="edit-value"
+                                                    ></lightning-input>
+                                                    <lightning-textarea
+                                                        label="Note (optional)"
+                                                        value={editNote}
+                                                        onchange={handleEditNote}
+                                                        class="edit-note"
+                                                    ></lightning-textarea>
+                                                    <div class="slds-m-top_x-small">
+                                                        <lightning-button label="Cancel" onclick={handleCancelEdit} class="slds-m-right_x-small cancel-button"></lightning-button>
+                                                        <lightning-button variant="brand" label="Save" onclick={handleSaveEdit} disabled={isSaving} class="save-button"></lightning-button>
+                                                    </div>
+                                                </div>
+                                            </template>
+                                        </div>
+                                    </template>
+                                </div>
+                            </template>
+                        </section>
+                    </template>
+                </template>
+                <template lwc:else>
+                    <p class="slds-text-body_small slds-text-color_weak slds-m-bottom_small no-facts">{emptyMessage}</p>
+                </template>
+
+                <!-- Files -->
+                <template lwc:if={hasFiles}>
+                    <section aria-label="Source files" class="slds-m-bottom_small">
+                        <h3 class="slds-text-title_caps slds-m-bottom_x-small">Source files</h3>
+                        <ul class="slds-has-dividers_bottom-space">
+                            <template for:each={files} for:item="file">
+                                <li key={file.documentId} class="slds-item slds-text-body_small file-item">
+                                    <lightning-icon icon-name="utility:file" size="xx-small" alternative-text="" class="slds-m-right_xx-small"></lightning-icon>
+                                    <template lwc:if={file.url}>
+                                        <a href={file.url} target="_blank">{file.name}</a>
+                                    </template>
+                                    <template lwc:else>{file.name}</template>
+                                    <span class="slds-text-color_weak slds-m-left_x-small">{file.meta}</span>
+                                </li>
+                            </template>
+                        </ul>
+                    </section>
+                </template>
+            </template>
+        </div>
+    </lightning-card>
+</template>

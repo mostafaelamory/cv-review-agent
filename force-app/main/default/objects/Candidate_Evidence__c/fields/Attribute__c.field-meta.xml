@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Attribute__c</fullName>
+    <label>Attribute</label>
+    <description>What the fact is about, e.g. 'Skill', 'Job title', 'Degree'.</description>
+    <inlineHelpText>What the fact is about, e.g. 'Skill', 'Job title', 'Degree'.</inlineHelpText>
+    <length>255</length>
+    <required>false</required>
+    <type>Text</type>
+</CustomField>

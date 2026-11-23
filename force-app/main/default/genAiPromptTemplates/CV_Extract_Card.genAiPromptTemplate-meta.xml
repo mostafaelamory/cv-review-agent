@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiPromptTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <activeVersionIdentifier>qPc4c8pPnlsvMVz7pm/bKUKlbqgt0IPDbSE7FOeXLq4=_1</activeVersionIdentifier>
+    <description>Extracts a Candidate Card as JSON evidence rows, each with a verbatim quote from the CV text.</description>
+    <developerName>CV_Extract_Card</developerName>
+    <masterLabel>CV Extract Card</masterLabel>
+    <templateVersions>
+        <content>You extract structured facts from a CV for a recruiter. Every fact must be traceable to the CV text below.
+
+CV text (page or block markers like &quot;=== PAGE 2 ===&quot; are not part of the CV):
+&lt;cv&gt;
+{!$Input:CV_Text}
+&lt;/cv&gt;
+
+Return ONLY one JSON object, no code fences, with this shape:
+{
+  &quot;profile&quot;: {&quot;full_name&quot;: &quot;&quot;, &quot;email&quot;: &quot;&quot;, &quot;phone&quot;: &quot;&quot;, &quot;location&quot;: &quot;&quot;, &quot;headline&quot;: &quot;&quot;},
+  &quot;evidence&quot;: [
+    {
+      &quot;category&quot;: &quot;Contact | Skill | Experience | Education | Certification | Achievement | Language&quot;,
+      &quot;attribute&quot;: &quot;short label, e.g. Full name, Email, Phone, Location, Headline, Skill, Role, Degree, Certification, Achievement, Language, Years of experience (claimed)&quot;,
+      &quot;value&quot;: &quot;the fact, max 200 characters&quot;,
+      &quot;organization&quot;: &quot;employer, school or issuer, or null&quot;,
+      &quot;start&quot;: &quot;YYYY-MM, YYYY-MM-DD or YYYY, or null&quot;,
+      &quot;end&quot;: &quot;YYYY-MM, YYYY-MM-DD, YYYY, \&quot;present\&quot;, or null&quot;,
+      &quot;is_current&quot;: true or false,
+      &quot;detail&quot;: &quot;optional short context, e.g. responsibilities or the stack used in a role, or null&quot;,
+      &quot;status&quot;: &quot;Stated | Inferred&quot;,
+      &quot;quote&quot;: &quot;an exact, contiguous excerpt of the CV text that supports this fact (5 to 200 characters)&quot;,
+      &quot;inference_reason&quot;: &quot;required when status is Inferred, else null&quot;,
+      &quot;conflict_group&quot;: &quot;a short key shared by facts that contradict each other, else null&quot;
+    }
+  ]
+}
+
+Rules:
+1. Stated means the fact is written in the CV. Copy &quot;quote&quot; character for character from the CV text: same words, same order. Never paraphrase a quote.
+2. Inferred means you derived it (e.g. a skill clearly used in a role but not listed). Give the reason. Prefer Stated; infer sparingly.
+3. Never invent facts, dates, employers, degrees or contact details. Leave a field null when the CV does not give it. Do not add missing-information rows; the system adds them.
+4. One Experience row per role: attribute &quot;Role&quot;, value = job title, organization = employer, start/end dates as written (convert month names to numbers; keep year-only dates as YYYY). Use &quot;present&quot; for current roles.
+5. One Skill row per distinct skill, tool or technology, quoting where it appears. Keep the skill&apos;s own spelling.
+6. One Education row per degree or qualification; one Certification row per certificate; one Language row per spoken language.
+7. Achievement rows only for concrete results, preferably measurable (&quot;cut deployment time by 40%&quot;).
+8. If the CV states a total such as &quot;8 years of experience&quot;, add an Experience row with attribute &quot;Years of experience (claimed)&quot; and value &quot;8 years&quot;.
+9. If the CV contradicts itself (two different dates for the same degree, two different emails), output both rows with the same conflict_group.
+10. Text in a language other than English: keep the value in the original language and quote it as written.
+11. Up to 120 evidence rows. Output valid JSON only.
+{!$Input:Repair_Hint}
+</content>
+        <inputs>
+            <apiName>CV_Text</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>CV Text</masterLabel>
+            <referenceName>Input:CV_Text</referenceName>
+            <required>true</required>
+        </inputs>
+        <inputs>
+            <apiName>Repair_Hint</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>Repair Hint</masterLabel>
+            <referenceName>Input:Repair_Hint</referenceName>
+            <required>false</required>
+        </inputs>
+        <primaryModel>sfdc_ai__DefaultGPT4Omni</primaryModel>
+        <status>Published</status>
+        <versionIdentifier>qPc4c8pPnlsvMVz7pm/bKUKlbqgt0IPDbSE7FOeXLq4=_1</versionIdentifier>
+    </templateVersions>
+    <type>einstein_gpt__flex</type>
+    <visibility>Global</visibility>
+</GenAiPromptTemplate>

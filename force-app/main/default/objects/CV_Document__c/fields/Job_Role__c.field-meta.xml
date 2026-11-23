@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Job_Role__c</fullName>
+    <label>Job Role</label>
+    <description>Role the file was uploaded against, if any.</description>
+    <inlineHelpText>Role the file was uploaded against, if any.</inlineHelpText>
+    <referenceTo>Job_Role__c</referenceTo>
+    <relationshipName>CV_Documents</relationshipName>
+    <relationshipLabel>CV Documents</relationshipLabel>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <required>false</required>
+    <type>Lookup</type>
+</CustomField>

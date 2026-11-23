@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Extraction_Method__c</fullName>
+    <label>Extraction Method</label>
+    <required>false</required>
+    
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>DOCX Parser</fullName>
+                <default>false</default>
+                <label>DOCX Parser</label>
+            </value>
+            <value>
+                <fullName>PDF Text Layer</fullName>
+                <default>false</default>
+                <label>PDF Text Layer</label>
+            </value>
+            <value>
+                <fullName>LLM Transcription</fullName>
+                <default>false</default>
+                <label>LLM Transcription</label>
+            </value>
+            <value>
+                <fullName>Stub</fullName>
+                <default>false</default>
+                <label>Stub</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <type>Picklist</type>
+</CustomField>

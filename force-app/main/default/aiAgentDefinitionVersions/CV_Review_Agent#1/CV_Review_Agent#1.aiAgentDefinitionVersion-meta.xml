@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AiAgentDefinitionVersion xmlns="http://soap.sforce.com/2006/04/metadata">
+    <articleAnswersGPTEnabled>false</articleAnswersGPTEnabled>
+    <billingMode>ActionBased</billingMode>
+    <citationsEnabled>false</citationsEnabled>
+    <conversationVariables>
+        <dataType>Text</dataType>
+        <description>The agent instructions</description>
+        <developerName>AgentScriptInternal_agent_instructions</developerName>
+        <includeInPrompt>false</includeInPrompt>
+        <label>Agent Instructions</label>
+        <visibility>Internal</visibility>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Boolean</dataType>
+        <description>Runtime condition evaluation for if statements</description>
+        <developerName>AgentScriptInternal_condition_1</developerName>
+        <includeInPrompt>false</includeInPrompt>
+        <label>Runtime Condition 1</label>
+        <visibility>Internal</visibility>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Text</dataType>
+        <description>The next topic to be visited</description>
+        <developerName>AgentScriptInternal_next_topic</developerName>
+        <includeInPrompt>false</includeInPrompt>
+        <label>Next Topic</label>
+        <visibility>Internal</visibility>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Boolean</dataType>
+        <description>True once an evaluation in this conversation produced at least one score; gates bookmarking.</description>
+        <developerName>has_evaluation</developerName>
+        <includeInPrompt>false</includeInPrompt>
+        <label>Has Evaluation</label>
+        <visibility>Internal</visibility>
+    </conversationVariables>
+    <copilotPrimaryLanguage>en_US</copilotPrimaryLanguage>
+    <genAiPlannerName>CV_Review_Agent_v1</genAiPlannerName>
+    <isScriptCompatibleAgent>true</isScriptCompatibleAgent>
+    <knowledgeActionEnabled>false</knowledgeActionEnabled>
+    <knowledgeFallbackEnabled>false</knowledgeFallbackEnabled>
+    <planner>
+        <fullName>CV_Review_Agent_v1</fullName>
+        <agentGraphRef>20ZgK00000B6G3m</agentGraphRef>
+        <description>Helps recruiters review uploaded CVs: grounded Q&amp;A with sources, scoring and recommendations for a role, bookmarks, and ingestion status.</description>
+        <localTopicLinks>
+            <genAiPluginName>agent_router</genAiPluginName>
+        </localTopicLinks>
+        <localTopicLinks>
+            <genAiPluginName>candidate_qa</genAiPluginName>
+        </localTopicLinks>
+        <localTopicLinks>
+            <genAiPluginName>compare_recommend</genAiPluginName>
+        </localTopicLinks>
+        <localTopicLinks>
+            <genAiPluginName>intake_status</genAiPluginName>
+        </localTopicLinks>
+        <localTopicLinks>
+            <genAiPluginName>off_topic</genAiPluginName>
+        </localTopicLinks>
+        <localTopics>
+            <canEscalate>false</canEscalate>
+            <description>Route the recruiter&apos;s request to the right subagent.</description>
+            <genAiPluginInstructions>
+                <description>You are the CV Review Agent, an assistant for recruiters. You answer questions about candidates, compare and rank them for job roles, and bookmark candidates, using only the results of your actions. Never answer from general knowledge about people, employers, schools or technologies. Never consider age, gender, nationality, religion, health or other protected characteristics. Keep replies short and factual.</description>
+                <developerName>instruction0_179gK000002gwuT</developerName>
+                <language>en_US</language>
+                <masterLabel>instruction0_179gK000002gwuT</masterLabel>
+                <sortOrder>1</sortOrder>
+            </genAiPluginInstructions>
+            <language>en_US</language>
+            <localDeveloperName>agent_router</localDeveloperName>
+            <masterLabel>Agent Router</masterLabel>
+            <pluginType>Topic</pluginType>
+        </localTopics>
+        <localTopics>
+            <canEscalate>false</canEscalate>
+            <description>Answers questions about one or more candidates from their CVs, e.g. &apos;Does Sara have Apex experience?&apos; or &apos;Who has a Master&apos;s degree?&apos;.</description>
+            <genAiPluginInstructions>
+                <description>You are the CV Review Agent, an assistant for recruiters. You answer questions about candidates, compare and rank them for job roles, and bookmark candidates, using only the results of your actions. Never answer from general knowledge about people, employers, schools or technologies. Never consider age, gender, nationality, religion, health or other protected characteristics. Keep replies short and factual.</description>
+                <developerName>instruction0_179gK000002gwuW</developerName>
+                <language>en_US</language>
+                <masterLabel>instruction0_179gK000002gwuW</masterLabel>
+                <sortOrder>1</sortOrder>
+            </genAiPluginInstructions>
+            <language>en_US</language>
+            <localActionLinks>
+                <functionName>answer_question</functionName>
+            </localActionLinks>
+            <localActions>
+                <description>Answers a question about one or more candidates using only their CV evidence, with verified sources.</description>
+                <invocationTarget>CvAnswerQuestionAction</invocationTarget>
+                <invocationTargetType>apex</invocationTargetType>
+                <isConfirmationRequired>false</isConfirmationRequired>
+                <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+                <localDeveloperName>answer_question</localDeveloperName>
+                <masterLabel>Answer Candidate Question</masterLabel>
+                <progressIndicatorMessage>Checking the CVs...</progressIndicatorMessage>
+            </localActions>
+            <localDeveloperName>candidate_qa</localDeveloperName>
+            <masterLabel>Candidate Q&amp;A</masterLabel>
+            <pluginType>Topic</pluginType>
+        </localTopics>
+        <localTopics>
+            <canEscalate>false</canEscalate>
+            <description>Scores and ranks candidates for a job role, recommends with strengths, concerns and interview probes, explains rankings, and bookmarks candidates with notes.</description>
+            <genAiPluginInstructions>
+                <description>You are the CV Review Agent, an assistant for recruiters. You answer questions about candidates, compare and rank them for job roles, and bookmark candidates, using only the results of your actions. Never answer from general knowledge about people, employers, schools or technologies. Never consider age, gender, nationality, religion, health or other protected characteristics. Keep replies short and factual.</description>
+                <developerName>instruction0_179gK000002gwuX</developerName>
+                <language>en_US</language>
+                <masterLabel>instruction0_179gK000002gwuX</masterLabel>
+                <sortOrder>1</sortOrder>
+            </genAiPluginInstructions>
+            <language>en_US</language>
+            <localActionLinks>
+                <functionName>create_bookmark</functionName>
+            </localActionLinks>
+            <localActionLinks>
+                <functionName>explain_ranking</functionName>
+            </localActionLinks>
+            <localActionLinks>
+                <functionName>evaluate_candidates</functionName>
+            </localActionLinks>
+            <localActions>
+                <description>Saves one bookmark record with the candidate overview, score, reasoning, role and the recruiter&apos;s notes.</description>
+                <invocationTarget>CvCreateBookmarkAction</invocationTarget>
+                <invocationTargetType>apex</invocationTargetType>
+                <isConfirmationRequired>true</isConfirmationRequired>
+                <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+                <localDeveloperName>create_bookmark</localDeveloperName>
+                <masterLabel>Create Bookmark</masterLabel>
+                <progressIndicatorMessage>Saving the bookmark...</progressIndicatorMessage>
+            </localActions>
+            <localActions>
+                <description>Scores candidates against a job role, ranks them, and recommends with strengths, concerns and interview probes.</description>
+                <invocationTarget>CvEvaluateCandidatesAction</invocationTarget>
+                <invocationTargetType>apex</invocationTargetType>
+                <isConfirmationRequired>false</isConfirmationRequired>
+                <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+                <localDeveloperName>evaluate_candidates</localDeveloperName>
+                <masterLabel>Evaluate Candidates</masterLabel>
+                <progressIndicatorMessage>Scoring candidates against the role...</progressIndicatorMessage>
+            </localActions>
+            <localActions>
+                <description>Explains why one candidate ranked above another for a role, requirement by requirement.</description>
+                <invocationTarget>CvExplainRankingAction</invocationTarget>
+                <invocationTargetType>apex</invocationTargetType>
+                <isConfirmationRequired>false</isConfirmationRequired>
+                <isIncludeInProgressIndicator>false</isIncludeInProgressIndicator>
+                <localDeveloperName>explain_ranking</localDeveloperName>
+                <masterLabel>Explain Ranking</masterLabel>
+            </localActions>
+            <localDeveloperName>compare_recommend</localDeveloperName>
+            <masterLabel>Compare &amp; Recommend</masterLabel>
+            <pluginType>Topic</pluginType>
+        </localTopics>
+        <localTopics>
+            <canEscalate>false</canEscalate>
+            <description>Reports which uploaded CVs are ready, still processing, need review or failed, and why.</description>
+            <genAiPluginInstructions>
+                <description>You are the CV Review Agent, an assistant for recruiters. You answer questions about candidates, compare and rank them for job roles, and bookmark candidates, using only the results of your actions. Never answer from general knowledge about people, employers, schools or technologies. Never consider age, gender, nationality, religion, health or other protected characteristics. Keep replies short and factual.</description>
+                <developerName>instruction0_179gK000002gwuU</developerName>
+                <language>en_US</language>
+                <masterLabel>instruction0_179gK000002gwuU</masterLabel>
+                <sortOrder>1</sortOrder>
+            </genAiPluginInstructions>
+            <language>en_US</language>
+            <localActionLinks>
+                <functionName>get_ingestion_status</functionName>
+            </localActionLinks>
+            <localActions>
+                <description>Reports the processing status of uploaded CVs, with failure reasons.</description>
+                <invocationTarget>CvIngestionStatusAction</invocationTarget>
+                <invocationTargetType>apex</invocationTargetType>
+                <isConfirmationRequired>false</isConfirmationRequired>
+                <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+                <localDeveloperName>get_ingestion_status</localDeveloperName>
+                <masterLabel>Get Ingestion Status</masterLabel>
+                <progressIndicatorMessage>Checking uploads...</progressIndicatorMessage>
+            </localActions>
+            <localDeveloperName>intake_status</localDeveloperName>
+            <masterLabel>Intake Status</masterLabel>
+            <pluginType>Topic</pluginType>
+        </localTopics>
+        <localTopics>
+            <canEscalate>false</canEscalate>
+            <description>Handles requests unrelated to reviewing candidates, CVs, roles or bookmarks.</description>
+            <genAiPluginInstructions>
+                <description>You are the CV Review Agent, an assistant for recruiters. You answer questions about candidates, compare and rank them for job roles, and bookmark candidates, using only the results of your actions. Never answer from general knowledge about people, employers, schools or technologies. Never consider age, gender, nationality, religion, health or other protected characteristics. Keep replies short and factual.</description>
+                <developerName>instruction0_179gK000002gwuV</developerName>
+                <language>en_US</language>
+                <masterLabel>instruction0_179gK000002gwuV</masterLabel>
+                <sortOrder>1</sortOrder>
+            </genAiPluginInstructions>
+            <language>en_US</language>
+            <localDeveloperName>off_topic</localDeveloperName>
+            <masterLabel>Off Topic</masterLabel>
+            <pluginType>Topic</pluginType>
+        </localTopics>
+        <masterLabel>CV Review Agent</masterLabel>
+        <plannerType>Atlas__ConcurrentMultiAgentOrchestration</plannerType>
+    </planner>
+    <smallTalkEnabled>false</smallTalkEnabled>
+    <staticPromptsEnabled>false</staticPromptsEnabled>
+    <status>Inactive</status>
+    <stopRecPrompts>false</stopRecPrompts>
+    <surfacesEnabled>false</surfacesEnabled>
+    <toneType>Casual</toneType>
+    <version>1</version>
+    <welcomeMessage>Hi, I&apos;m the CV Review Agent. Ask me about a candidate, compare candidates for a role, or check which CVs are ready.</welcomeMessage>
+</AiAgentDefinitionVersion>

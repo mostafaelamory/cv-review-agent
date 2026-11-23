@@ -1,0 +1,46 @@
+{
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "evaluationResult" : {
+      "title" : "Evaluation Result",
+      "description" : "Ranked table for display.",
+      "lightning:type" : "c__evaluationResult",
+      "lightning:isPII" : false,
+      "copilotAction:isDisplayable" : true,
+      "copilotAction:isUsedByPlanner" : true
+    },
+    "hasEvaluation" : {
+      "title" : "Has Evaluation",
+      "description" : "True when at least one candidate has a score for this role.",
+      "lightning:type" : "lightning__booleanType",
+      "lightning:isPII" : false,
+      "copilotAction:isDisplayable" : false,
+      "copilotAction:isUsedByPlanner" : true
+    },
+    "needsClarification" : {
+      "title" : "Needs Clarification",
+      "description" : "True when the role or a candidate name was ambiguous or not found.",
+      "lightning:type" : "lightning__booleanType",
+      "lightning:isPII" : false,
+      "copilotAction:isDisplayable" : false,
+      "copilotAction:isUsedByPlanner" : true
+    },
+    "summary" : {
+      "title" : "Summary",
+      "description" : "Plain-text ranking, recommendation, trade-offs and gaps.",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isDisplayable" : false,
+      "copilotAction:isUsedByPlanner" : true
+    },
+    "topCandidate" : {
+      "title" : "Top Candidate",
+      "description" : "Name of the top-ranked candidate.",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isDisplayable" : false,
+      "copilotAction:isUsedByPlanner" : true
+    }
+  },
+  "lightning:type" : "lightning__objectType"
+}

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiPromptTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <activeVersionIdentifier>TRfi0CapWpp9GMbkSvUouBj2JULu5H04H99h4jzpXGw=_1</activeVersionIdentifier>
+    <description>Answers a recruiter's question only from the supplied CV evidence, as cited JSON segments.</description>
+    <developerName>CV_Answer_Question</developerName>
+    <masterLabel>CV Answer Question</masterLabel>
+    <templateVersions>
+        <content>You answer a recruiter&apos;s question about job candidates using ONLY the evidence block below. Each evidence line starts with an id in brackets: E-ids are extracted facts, T-ids are passages of CV text.
+
+Question: {!$Input:Question}
+Candidates in scope: {!$Input:Candidates}
+
+&lt;evidence&gt;
+{!$Input:Evidence}
+&lt;/evidence&gt;
+
+Rules:
+1. Use only the evidence block. Ignore anything you know about employers, schools, technologies or people.
+2. Answer in short segments (one or two sentences each). Every segment must list the ids that support it in &quot;sources&quot;. A segment without sources is not allowed.
+3. State uncertainty plainly: for Inferred facts say &quot;inferred from ...&quot;; for Conflicting facts give both versions (&quot;the CV states both X and Y&quot;); for Unverified facts say the quote could not be verified; for Missing facts say it is not stated.
+4. If the evidence does not answer the question, return {&quot;segments&quot;: [], &quot;not_stated&quot;: true}. Never guess.
+5. For questions about several candidates, answer per candidate. Name candidates with no supporting evidence only in a segment that cites their Missing rows; never cite unrelated facts to support &quot;no evidence&quot;.
+6. Be neutral and factual. Do not judge suitability unless asked, and do not comment on age, gender, nationality, religion, health or other protected characteristics.
+7. Keep the whole answer under 180 words.
+
+Return ONLY this JSON, no code fences:
+{&quot;segments&quot;: [{&quot;text&quot;: &quot;...&quot;, &quot;sources&quot;: [&quot;E1&quot;, &quot;T2&quot;]}], &quot;not_stated&quot;: false}
+{!$Input:Feedback}
+</content>
+        <inputs>
+            <apiName>Question</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>Question</masterLabel>
+            <referenceName>Input:Question</referenceName>
+            <required>true</required>
+        </inputs>
+        <inputs>
+            <apiName>Candidates</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>Candidates</masterLabel>
+            <referenceName>Input:Candidates</referenceName>
+            <required>true</required>
+        </inputs>
+        <inputs>
+            <apiName>Evidence</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>Evidence</masterLabel>
+            <referenceName>Input:Evidence</referenceName>
+            <required>true</required>
+        </inputs>
+        <inputs>
+            <apiName>Feedback</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>Feedback</masterLabel>
+            <referenceName>Input:Feedback</referenceName>
+            <required>false</required>
+        </inputs>
+        <primaryModel>sfdc_ai__DefaultGPT4Omni</primaryModel>
+        <status>Published</status>
+        <versionIdentifier>TRfi0CapWpp9GMbkSvUouBj2JULu5H04H99h4jzpXGw=_1</versionIdentifier>
+    </templateVersions>
+    <type>einstein_gpt__flex</type>
+    <visibility>Global</visibility>
+</GenAiPromptTemplate>

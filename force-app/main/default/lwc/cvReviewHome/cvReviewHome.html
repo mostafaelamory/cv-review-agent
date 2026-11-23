@@ -1,0 +1,148 @@
+<template>
+    <div class="home">
+        <!-- Hero -->
+        <div class="hero slds-p-around_large">
+            <div class="slds-grid slds-wrap slds-grid_vertical-align-center slds-gutters_small">
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_2-of-3">
+                    <p class="hero-eyebrow">CV Review</p>
+                    <h1 class="hero-title">{greeting}</h1>
+                    <p class="hero-sub">
+                        Upload CVs, review evidence-backed candidate cards, and ask the CV Review Agent to answer,
+                        rank and bookmark. Every answer is grounded in the CV text, with sources.
+                    </p>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3 hero-actions">
+                    <lightning-button variant="brand" label="Upload CVs" icon-name="utility:upload" onclick={goUpload}></lightning-button>
+                    <lightning-button label="Candidates" data-object="Candidate__c" onclick={goList} class="slds-m-left_x-small"></lightning-button>
+                    <lightning-button-icon icon-name="utility:refresh" alternative-text="Refresh" onclick={refresh} class="slds-m-left_x-small"></lightning-button-icon>
+                </div>
+            </div>
+        </div>
+
+        <template lwc:if={error}>
+            <div class="slds-notify slds-notify_alert slds-alert_error slds-m-top_small" role="alert">{error}</div>
+        </template>
+
+        <!-- KPIs -->
+        <div class="kpis slds-m-top_medium">
+            <template for:each={stats} for:item="s">
+                <div key={s.key} class={s.tileClass} title={s.helpText}>
+                    <p class="kpi-value">{s.value}</p>
+                    <p class="kpi-label">{s.label}</p>
+                </div>
+            </template>
+        </div>
+
+        <div class="slds-grid slds-wrap slds-gutters slds-m-top_medium">
+            <!-- Agent prompts -->
+            <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-2">
+                <lightning-card title="Ask the CV Review Agent" icon-name="utility:einstein">
+                    <div class="slds-p-horizontal_medium">
+                        <p class="slds-text-body_small slds-text-color_weak slds-m-bottom_small">
+                            Click a prompt to copy it, then open Agentforce from the header and paste. Answers cite
+                            the CV; anything not in the CV comes back as "Not stated".
+                        </p>
+                        <ul class="prompts">
+                            <template for:each={prompts} for:item="p">
+                                <li key={p.id}>
+                                    <button class="prompt" data-text={p.text} onclick={handlePrompt}>
+                                        <span class="prompt-group">{p.group}</span>
+                                        <span class="prompt-text">{p.text}</span>
+                                        <lightning-icon icon-name="utility:copy" size="xx-small" class="prompt-icon"></lightning-icon>
+                                    </button>
+                                </li>
+                            </template>
+                        </ul>
+                    </div>
+                </lightning-card>
+            </div>
+
+            <!-- Shortlist -->
+            <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-2">
+                <lightning-card title="My shortlist" icon-name="utility:bookmark">
+                    <lightning-button slot="actions" variant="base" label="All bookmarks" data-object="Candidate_Bookmark__c" data-filter="All" onclick={goList}></lightning-button>
+                    <div class="slds-p-horizontal_medium">
+                        <template lwc:if={hasShortlist}>
+                            <ul class="rows">
+                                <template for:each={shortlist} for:item="b">
+                                    <li key={b.Id} class="row">
+                                        <div class="row-main">
+                                            <a href="#" data-id={b.Id} data-object="Candidate_Bookmark__c" onclick={openRecord}>{b.candidateName}</a>
+                                            <p class="slds-text-body_small slds-text-color_weak">{b.roleName} · {b.Status__c}</p>
+                                        </div>
+                                        <div class="row-side">
+                                            <span class="score">{b.Score__c}</span>
+                                            <span class={b.badgeClass}>{b.Band__c}</span>
+                                        </div>
+                                    </li>
+                                </template>
+                            </ul>
+                        </template>
+                        <template lwc:else>
+                            <p class="empty">No bookmarks yet. Ask the agent to rank candidates for a role, then bookmark the ones you like.</p>
+                        </template>
+                    </div>
+                </lightning-card>
+            </div>
+
+            <!-- Recent candidates -->
+            <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-2 slds-m-top_medium">
+                <lightning-card title="Recent candidate cards" icon-name="standard:avatar">
+                    <lightning-button slot="actions" variant="base" label="View all" data-object="Candidate__c" onclick={goList}></lightning-button>
+                    <div class="slds-p-horizontal_medium">
+                        <template lwc:if={hasRecent}>
+                            <ul class="rows">
+                                <template for:each={recent} for:item="c">
+                                    <li key={c.Id} class="row">
+                                        <div class="row-main">
+                                            <a href="#" data-id={c.Id} data-object="Candidate__c" onclick={openRecord}>{c.Name}</a>
+                                            <p class="slds-text-body_small slds-text-color_weak">{c.Headline__c}</p>
+                                            <p lwc:if={c.flags} class="flag">{c.flags}</p>
+                                        </div>
+                                        <div class="row-side">
+                                            <span lwc:if={c.completeness} class="slds-text-body_small slds-text-color_weak">
+                                                <lightning-formatted-number value={c.completeness} format-style="percent"></lightning-formatted-number>
+                                            </span>
+                                            <span class={c.badgeClass}>{c.Card_Status__c}</span>
+                                        </div>
+                                    </li>
+                                </template>
+                            </ul>
+                        </template>
+                        <template lwc:else>
+                            <p class="empty">No candidate cards yet. Upload CVs to get started.</p>
+                        </template>
+                    </div>
+                </lightning-card>
+            </div>
+
+            <!-- Open roles -->
+            <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-2 slds-m-top_medium">
+                <lightning-card title="Open roles" icon-name="standard:work_type">
+                    <lightning-button slot="actions" variant="base" label="All roles" data-object="Job_Role__c" onclick={goList}></lightning-button>
+                    <div class="slds-p-horizontal_medium">
+                        <template lwc:if={hasRoles}>
+                            <ul class="rows">
+                                <template for:each={roles} for:item="r">
+                                    <li key={r.id} class="row">
+                                        <div class="row-main">
+                                            <a href="#" data-id={r.id} data-object="Job_Role__c" onclick={openRecord}>{r.name}</a>
+                                            <p class="slds-text-body_small slds-text-color_weak">{r.requirements} requirements</p>
+                                        </div>
+                                        <div class="row-side slds-text-body_small">
+                                            <span>{r.evaluated} scored</span>
+                                            <span class="slds-badge slds-theme_success slds-m-left_x-small">{r.strong} strong</span>
+                                        </div>
+                                    </li>
+                                </template>
+                            </ul>
+                        </template>
+                        <template lwc:else>
+                            <p class="empty">No open roles. An admin adds roles and weighted requirements.</p>
+                        </template>
+                    </div>
+                </lightning-card>
+            </div>
+        </div>
+    </div>
+</template>

@@ -1,0 +1,5 @@
+{
+    "title": "Evaluation Result",
+    "description": "Ranked candidates for a role with score breakdown",
+    "lightning:type": "@apexClassType/c__CvEvaluateCandidatesAction$EvaluationResult"
+}

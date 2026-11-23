@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Bookmark_Is_Immutable</fullName>
+    <active>true</active>
+    <description>A bookmark is a decision record: after creation only Status may change. Add later comments as Notes.</description>
+    <errorConditionFormula>NOT(ISNEW()) &amp;&amp; OR(
+  ISCHANGED(Candidate__c),
+  ISCHANGED(Job_Role__c),
+  ISCHANGED(Candidate_Evaluation__c),
+  ISCHANGED(Overview_Snapshot__c),
+  ISCHANGED(Score__c),
+  ISCHANGED(Band__c),
+  ISCHANGED(Reasoning__c),
+  ISCHANGED(Notes__c),
+  ISCHANGED(Bookmarked_At__c),
+  ISCHANGED(Bookmark_Key__c)
+)</errorConditionFormula>
+    <errorMessage>Bookmarks are immutable decision records. Only Status can change; add later comments as Notes.</errorMessage>
+</ValidationRule>

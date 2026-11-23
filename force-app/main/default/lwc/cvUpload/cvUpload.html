@@ -1,0 +1,83 @@
+<template>
+    <lightning-card title="Upload CVs" icon-name="doctype:attachment">
+        <div class="slds-p-horizontal_medium">
+            <lightning-file-upload
+                label="Candidate CVs"
+                name="cvUpload"
+                accept={acceptedFormats}
+                record-id={recordId}
+                multiple
+                onuploadfinished={handleUploadFinished}
+            ></lightning-file-upload>
+            <p class="slds-text-body_small slds-text-color_weak slds-m-top_xx-small">{helpText}</p>
+
+            <template lwc:if={errorMessage}>
+                <div class="slds-notify slds-notify_alert slds-alert_error slds-m-top_small" role="alert">
+                    <span class="slds-assistive-text">Error</span>
+                    <h2>{errorMessage}</h2>
+                </div>
+            </template>
+
+            <template lwc:if={isBusy}>
+                <div class="slds-is-relative slds-m-top_small spinner-holder">
+                    <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
+                </div>
+            </template>
+
+            <template lwc:if={isPolling}>
+                <p class="slds-text-body_small slds-m-top_small" aria-live="polite">
+                    <lightning-icon icon-name="utility:sync" size="xx-small" class="slds-m-right_xx-small" alternative-text=""></lightning-icon>
+                    Processing CVs; statuses refresh automatically.
+                </p>
+            </template>
+
+            <template lwc:if={hasRows}>
+                <div class="slds-m-top_small slds-scrollable_x">
+                    <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped" aria-label="CV processing status">
+                        <thead>
+                            <tr class="slds-line-height_reset">
+                                <th scope="col"><div class="slds-truncate" title="File">File</div></th>
+                                <th scope="col"><div class="slds-truncate" title="Status">Status</div></th>
+                                <th scope="col"><div class="slds-truncate" title="Reason">Reason</div></th>
+                                <th scope="col"><div class="slds-truncate" title="Candidate">Candidate</div></th>
+                                <th scope="col"><div class="slds-truncate" title="Completeness">Completeness</div></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <template for:each={displayRows} for:item="row">
+                                <tr key={row.documentId} data-id={row.documentId}>
+                                    <th scope="row" data-label="File">
+                                        <div class="slds-truncate" title={row.fileName}>{row.fileName}</div>
+                                    </th>
+                                    <td data-label="Status">
+                                        <span class={row.badgeClass}>{row.status}</span>
+                                    </td>
+                                    <td data-label="Reason" class="slds-cell-wrap">{row.reason}</td>
+                                    <td data-label="Candidate">
+                                        <template lwc:if={row.candidateUrl}>
+                                            <a href={row.candidateUrl} class="candidate-link">{row.candidateLabel}</a>
+                                        </template>
+                                    </td>
+                                    <td data-label="Completeness">
+                                        <template lwc:if={row.hasCompleteness}>
+                                            <lightning-formatted-number
+                                                value={row.completenessFraction}
+                                                format-style="percent"
+                                                maximum-fraction-digits="0"
+                                            ></lightning-formatted-number>
+                                        </template>
+                                    </td>
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+                </div>
+            </template>
+            <template lwc:else>
+                <template lwc:if={showEmpty}>
+                    <p class="slds-text-body_small slds-text-color_weak slds-m-top_small">No CVs uploaded in the last 7 days.</p>
+                </template>
+            </template>
+        </div>
+    </lightning-card>
+</template>

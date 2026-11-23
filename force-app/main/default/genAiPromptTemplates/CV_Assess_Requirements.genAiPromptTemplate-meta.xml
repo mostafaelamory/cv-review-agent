@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiPromptTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <activeVersionIdentifier>DvJWQi8YoXnY05Wypg5pO/qHnBfhbtyRMbXrJz/DhzI=_1</activeVersionIdentifier>
+    <description>Judges each role requirement against one candidate's anonymised evidence: Met, Partial, Not evidenced or Contradicted.</description>
+    <developerName>CV_Assess_Requirements</developerName>
+    <masterLabel>CV Assess Requirements</masterLabel>
+    <templateVersions>
+        <content>You assess one anonymous candidate against a job&apos;s requirements, strictly from the evidence below. You do not score; you judge each requirement.
+
+Requirements:
+{!$Input:Requirements}
+
+Candidate evidence (each line starts with an id):
+{!$Input:Evidence}
+
+Information the CV does not contain:
+{!$Input:Known_Gaps}
+
+Equivalent terms: {!$Input:Skill_Aliases}
+
+For each requirement choose one match:
+- &quot;Met&quot;: the evidence clearly shows it.
+- &quot;Partial&quot;: related or weaker evidence (adjacent technology, less depth, shorter or older exposure).
+- &quot;Not evidenced&quot;: nothing in the evidence shows it. This is the default; absence is not a contradiction.
+- &quot;Contradicted&quot;: the evidence shows the opposite (e.g. the requirement is a language the CV lists at beginner level when fluency is required).
+
+Rules:
+1. Cite the evidence ids you relied on. &quot;Met&quot;, &quot;Partial&quot; and &quot;Contradicted&quot; need at least one id; otherwise use &quot;Not evidenced&quot;.
+2. Use only the evidence. Do not credit skills because of a job title, employer reputation or school name alone.
+3. Unverified or conflicting evidence may be cited, but say so in the rationale.
+4. Rationale: one sentence, factual, under 30 words.
+5. Never consider age, gender, nationality, religion, health, family status or any other protected characteristic.
+
+Return ONLY this JSON, no code fences, one entry per requirement id:
+{&quot;assessments&quot;: [{&quot;requirement&quot;: &quot;R1&quot;, &quot;match&quot;: &quot;Met&quot;, &quot;evidence&quot;: [&quot;E3&quot;, &quot;E7&quot;], &quot;rationale&quot;: &quot;...&quot;}]}
+</content>
+        <inputs>
+            <apiName>Requirements</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>Requirements</masterLabel>
+            <referenceName>Input:Requirements</referenceName>
+            <required>true</required>
+        </inputs>
+        <inputs>
+            <apiName>Evidence</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>Evidence</masterLabel>
+            <referenceName>Input:Evidence</referenceName>
+            <required>true</required>
+        </inputs>
+        <inputs>
+            <apiName>Known_Gaps</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>Known Gaps</masterLabel>
+            <referenceName>Input:Known_Gaps</referenceName>
+            <required>true</required>
+        </inputs>
+        <inputs>
+            <apiName>Skill_Aliases</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>Skill Aliases</masterLabel>
+            <referenceName>Input:Skill_Aliases</referenceName>
+            <required>true</required>
+        </inputs>
+        <primaryModel>sfdc_ai__DefaultGPT4Omni</primaryModel>
+        <status>Published</status>
+        <versionIdentifier>DvJWQi8YoXnY05Wypg5pO/qHnBfhbtyRMbXrJz/DhzI=_1</versionIdentifier>
+    </templateVersions>
+    <type>einstein_gpt__flex</type>
+    <visibility>Global</visibility>
+</GenAiPromptTemplate>
